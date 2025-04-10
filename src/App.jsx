@@ -1,13 +1,38 @@
-import "./App.css";
+import React, { useState } from "react";
+import MapComponent from "./components/MapComponent";
+import DepotInput from "./components/DepotInput";
+import DeliveryPointsInput from "./components/DeliveryPointsInput";
 
-function App() {
+const App = () => {
+  const [depot, setDepot] = useState(null);
+  const [deliveryPoints, setDeliveryPoints] = useState([]);
+
+  const handleMapClick = (latlng) => {
+    if (!depot) {
+      setDepot(latlng); // Set depot if not already set
+    } else {
+      setDeliveryPoints([...deliveryPoints, latlng]); // Add delivery point
+    }
+  };
+
   return (
-    <main className="flex justify-center gap-4 flex-col min-h-screen">
-      <h1 className="text-3xl text-center font-bold underline">React & Tailwind CSS Starter Pack</h1>
-      <p className="text-center text-xl">This is a starter pack for React & Tailwind CSS projects.</p>
-      <img src="https://bit.ly/3wsmzTy" alt="meme" className="mx-auto" />
-    </main>
+    <div className="flex h-screen">
+      <div className="w-1/2">
+        <MapComponent
+          depot={depot}
+          deliveryPoints={deliveryPoints}
+          onMapClick={handleMapClick}
+        />
+      </div>
+      <div className="w-1/2 bg-gray-100 p-6 overflow-y-auto">
+        <DepotInput depot={depot} setDepot={setDepot} />
+        <DeliveryPointsInput
+        deliveryPoints={deliveryPoints}
+         setDeliveryPoints={setDeliveryPoints}
+        />
+      </div>
+    </div>
   );
-}
+};
 
 export default App;

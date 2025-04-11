@@ -20,25 +20,25 @@ const App = () => {
 
   return (
     <Router>
-      <div className="flex flex-col items-center bg-gray-100 min-h-screen">
+      <div className="flex flex-col items-center bg-gray-100 min-h-screen overflow-auto">
         {/* Header */}
-        <header className="w-full bg-blue-500 text-white py-4 shadow-md">
+        <header className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-4 shadow-md">
           <nav className="container mx-auto flex justify-between items-center px-4">
-            <h1 className="text-xl font-bold">Route Planner</h1>
-            <ul className="flex space-x-4">
+            <h1 className="text-2xl font-bold">Route Planner</h1>
+            <ul className="flex space-x-6">
               <li>
-                <Link to="/" className="hover:underline">
+                <Link to="/" className="hover:underline text-lg">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="hover:underline">
-                  About
+                <Link to="/map" className="hover:underline text-lg">
+                  Map
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="hover:underline">
-                  Contact
+                <Link to="/optimal-route" className="hover:underline text-lg">
+                  Optimal Route
                 </Link>
               </li>
             </ul>
@@ -68,16 +68,8 @@ const App = () => {
                     <DeliveryPointsInput
                       deliveryPoints={deliveryPoints}
                       setDeliveryPoints={setDeliveryPoints}
+                      depot={depot}
                     />
-                    {/* Calculate Optimal Route Button */}
-                    <button
-                      onClick={() =>
-                        window.location.href = "/optimal-route"
-                      }
-                      className="bg-blue-500 text-white py-3 px-6 rounded-md hover:bg-blue-600"
-                    >
-                      Calculate Optimal Route
-                    </button>
                   </div>
                 </div>
               </div>
@@ -90,6 +82,13 @@ const App = () => {
             }
           />
         </Routes>
+
+        {/* Footer */}
+        <footer className="w-full bg-gray-800 text-white py-4 text-center">
+          <p className="text-sm">
+            &copy; {new Date().getFullYear()} Route Planner. All rights reserved.
+          </p>
+        </footer>
       </div>
     </Router>
   );

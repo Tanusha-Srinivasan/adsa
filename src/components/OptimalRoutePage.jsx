@@ -5,14 +5,14 @@ import "leaflet/dist/leaflet.css";
 
 // Custom icons
 const depotIcon = L.icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/167/167707.png",
-  iconSize: [25, 41],
+  iconUrl: "https://img.icons8.com/?size=100&id=13800&format=png&color=000000",
+  iconSize: [30, 41],
   iconAnchor: [12, 41],
 });
 
 const deliveryPointIcon = L.icon({
-  iconUrl: "https://cdn-icons-png.flaticon.com/512/167/167729.png",
-  iconSize: [25, 41],
+  iconUrl: "https://img.icons8.com/?size=100&id=7880&format=png&color=000000",
+  iconSize: [35, 41],
   iconAnchor: [12, 41],
 });
 
@@ -38,7 +38,7 @@ const OptimalRoutePage = ({ depot, deliveryPoints }) => {
   console.log("Route data:", route); // Debugging
 
   return (
-    <div className="bg-gray-100 w-full h-screen flex">
+    <div className="bg-gray-100 w-full h-[90vh] flex">
       {/* Main Content */}
       <div className="flex-1 flex flex-row gap-6 p-6">
         {/* Map Section */}

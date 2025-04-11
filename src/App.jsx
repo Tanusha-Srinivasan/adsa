@@ -5,6 +5,8 @@ import MapComponent from "./components/MapComponent";
 import DepotInput from "./components/DepotInput";
 import DeliveryPointsInput from "./components/DeliveryPointsInput";
 import OptimalRoutePage from "./components/OptimalRoutePage";
+import LoginPage from "./components/LoginPage";
+import SignupPage from "./components/SignupPage";
 
 const App = () => {
   const [depot, setDepot] = useState(null);
@@ -39,6 +41,16 @@ const App = () => {
               <li>
                 <Link to="/optimal-route" className="hover:underline text-lg">
                   Optimal Route
+                </Link>
+              </li>
+              <li>
+                <Link to="/login" className="hover:underline text-lg">
+                  Login
+                </Link>
+              </li>
+              <li>
+                <Link to="/signup" className="hover:underline text-lg">
+                  Signup
                 </Link>
               </li>
             </ul>
@@ -81,6 +93,8 @@ const App = () => {
               <OptimalRoutePage depot={depot} deliveryPoints={deliveryPoints} />
             }
           />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
         </Routes>
 
         {/* Footer */}

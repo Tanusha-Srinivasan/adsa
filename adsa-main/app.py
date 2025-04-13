@@ -17,41 +17,45 @@ def calculate_actual_route(depot, delivery_points):
             print(f"Warning: Trimming route from {len(delivery_points)} to 48 delivery points due to API limits")
             delivery_points = delivery_points[:48]
             
-        # Convert coordinates to [longitude, latitude] format
+        # Convert coordinates to [longitude, latitude] format for ORS
         coordinates = [[coord[1], coord[0]] for coord in [depot] + delivery_points + [depot]]
         
         print("Coordinates being sent to OpenRouteService:", coordinates)
         
-        # Try with a more compatible profile first
+        # Call OpenRouteService Directions API
         route = ors_client.directions(
             coordinates=coordinates,
-            profile="driving-car",  # More widely supported profile
-            format="geojson",
-            # Remove radiuses to let ORS find the best matches
+            profile="driving-car",
+            format="geojson"
         )
         
         print("OpenRouteService response received")
         
-        # Check if the 'routes' key exists in the response
+        # Extract the geometry from GeoJSON response
         if "features" in route and route["features"] and "geometry" in route["features"][0]:
-            geometry = route["features"][0]["geometry"]["coordinates"]
-            return geometry
+            geometry = route["features"][0]["geometry"]["coordinates"]  # [lon, lat]
+            
+            # ✅ Convert to [lat, lon] format for Leaflet
+            leaflet_ready = [[coord[1], coord[0]] for coord in geometry]
+            return leaflet_ready
+
         elif "routes" in route and route["routes"]:
-            geometry = route["routes"][0]["geometry"]["coordinates"]
-            return geometry
+            geometry = route["routes"][0]["geometry"]["coordinates"]  # [lon, lat]
+            leaflet_ready = [[coord[1], coord[0]] for coord in geometry]
+            return leaflet_ready
         else:
             print("No routes found in the OpenRouteService response.")
-            print("Response structure:", list(route.keys()))
             return None
     except Exception as e:
         print(f"Error fetching route from OpenRouteService: {e}")
         return None
+
 @app.route('/api/optimal-route', methods=['POST'])
 def optimal_route():
     """API endpoint to calculate the optimal route."""
     try:
         data = request.json
-        print("Received data:", data)  # Log the incoming request
+        print("Received data:", data)
         depot = data.get('depot')
         delivery_points = data.get('deliveryPoints')
 
